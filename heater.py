@@ -1,15 +1,22 @@
 # upython-update-file eduardostern
 # Heater Controller uPython
 
-import time, update, machine
+import time, update, machine, onewire, ds18x20
 
 led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(4, machine.Pin.OUT)
 nextupdate = time.time()+60
-nextpower = time.time()+10
+
+nextread = time.time()+10
 nextled = time.time()+1
+
 ledvalue=0
-powervalue=0
+
+
+ds_pin = machine.Pin(0)
+ds_sensor = ds18x20.DS18X20(onewire.OneWire(ds_pin))
+roms = ds_sensor.scan()
+
 
 
 def main():
@@ -22,10 +29,14 @@ def main():
     if time.time() >= nextupdate:
         update.update_file()
         nextupdate=time.time()+60
-    if time.time() >= nextpower:
-        power.value(powervalue)
-        powervalue=0**powervalue
-        nextpower=time.time()+10
+    if time.time() >= nextread:
+        ds_sensor.convert_temp()
+        for rom in roms:
+            print(rom)
+            print(ds_sensor.read_temp(rom))
+
+
+        nextread=time.time()+10
     if time.time() >= nextled:
         led.value(ledvalue)
         ledvalue=0**ledvalue
