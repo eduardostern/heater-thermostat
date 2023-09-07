@@ -6,11 +6,9 @@ import time, update, machine
 led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(0, machine.Pin.OUT)
 
-wdt = machine.WDT()
 
 while 1:
 
-    wdt.feed()
 
     led.value(1)
     power.value(0)
@@ -45,6 +43,5 @@ while 1:
     led.value(0)
     time.sleep(1)
 
-    wdt.feed()
-    
+
     update.update_file()
