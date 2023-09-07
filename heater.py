@@ -4,7 +4,7 @@
 import time, update, machine
 
 led = machine.Pin(2, machine.Pin.OUT)
-led = machine.Pin(0, machine.Pin.OUT)
+power = machine.Pin(0, machine.Pin.OUT)
 
 while 1:
     led.value(1)
