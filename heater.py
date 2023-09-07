@@ -19,14 +19,14 @@ def main():
     global powervalue
     global ledvalue
     
-    if time.time() > nextupdate:
+    if time.time() >= nextupdate:
         update.update_file()
         nextupdate=time.time()+60
-    if time.time() > nextpower:
+    if time.time() >= nextpower:
         power.value(powervalue)
         powervalue=0**powervalue
         nextpower=time.time()+1
-    if time.time() > nextled:
+    if time.time() >= nextled:
         led.value(ledvalue)
         ledvalue=0**ledvalue
         nextled=time.time()+4
