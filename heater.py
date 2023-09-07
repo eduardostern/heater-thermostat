@@ -21,7 +21,7 @@ roms = ds_sensor.scan()
 
 def main():
     global nextupdate
-    global nextpower
+    global nextread
     global nextled
     global powervalue
     global ledvalue
