@@ -3,8 +3,8 @@
 
 import time, update, machine
 
-led = machine.Pin(2, machine.Pin.OUT)
-power = machine.Pin(4, machine.Pin.OUT)
+led = machine.Pin(4, machine.Pin.OUT)
+power = machine.Pin(2, machine.Pin.OUT)
 nextupdate = time.time()+60
 nextpower = time.time()+4
 nextled = time.time()+1
