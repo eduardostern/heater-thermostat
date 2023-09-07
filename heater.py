@@ -49,3 +49,13 @@ def main():
 
 
     update.update_file()
+
+def loop():
+    while 1:
+        main()
+
+try:
+    loop()
+except:
+    machine.reset()
+    
