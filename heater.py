@@ -13,6 +13,12 @@ powervalue=0
 
 
 def main():
+    global nextupdate
+    global nextpower
+    global nextled
+    global powervalue
+    global ledvalue
+    
     if time.time() > nextupdate:
         update.update_file()
         nextupdate=time.time()+60
