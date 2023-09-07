@@ -7,12 +7,6 @@ led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(0, machine.Pin.OUT)
 
 
-loop()
-
-def loop():
-    while 1:
-        main()
-
 def main():
     led.value(1)
     power.value(0)
