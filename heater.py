@@ -1,5 +1,5 @@
-# Update File Wrong Signature
-# Changed
+# upython-update-file eduardostern
+# Heater Controller uPython
 
 import time, update, machine
 
