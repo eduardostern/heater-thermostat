@@ -1,8 +1,8 @@
 # Main File
 # Changed
 
-import time
+import time, update
 
 while 1:
     time.sleep(10)
-    update_file()
+    update.update_file()
