@@ -16,7 +16,7 @@ def main():
     if time.time() > nextupdate:
         update.update_file()
         nextupdate=time.time()+60
-    if time.time() > nextpwer:
+    if time.time() > nextpower:
         power.value(powervalue)
         powervalue=0**powervalue
         nextpower=time.time()+1
