@@ -6,9 +6,8 @@ import time, update, machine, onewire, ds18x20
 led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(4, machine.Pin.OUT)
 nextupdate = time.time()+60
-
-nextread = time.time()+10
-nextled = time.time()+1
+nextread = time.time()
+nextled = time.time()
 
 ledvalue=0
 
@@ -31,12 +30,8 @@ def main():
         nextupdate=time.time()+60
     if time.time() >= nextread:
         ds_sensor.convert_temp()
-        for rom in roms:
-            print(rom)
-            print(ds_sensor.read_temp(rom))
-
-
-        nextread=time.time()+10
+        print(ds_sensor.read_temp(roms[0]))
+        nextread=time.time()+30
     if time.time() >= nextled:
         led.value(ledvalue)
         ledvalue=0**ledvalue
