@@ -4,49 +4,27 @@
 import time, update, machine
 
 led = machine.Pin(2, machine.Pin.OUT)
-power = machine.Pin(0, machine.Pin.OUT)
-nextupdatetime = time.time()+60;
+power = machine.Pin(4, machine.Pin.OUT)
+nextupdate = time.time()+60;
+nextpower = time.time()+4;
+nextled = time.time()+1;
+ledvalue=0;
+powervalue=0;
 
 
 def main():
-    led.value(1)
-    power.value(0)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    led.value(1)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    led.value(1)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    power.value(1)
-
-    led.value(1)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    led.value(1)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    led.value(1)
-    time.sleep(1)
-    led.value(0)
-    time.sleep(1)
-
-    if time.time() > nextupdatetime:
+    if time.time() > nextupdate:
         update.update_file()
-        nextupdatetime=time.time()+60
+        nextupdate=time.time()+60
+    if time.time() > nextled:
+        power.value(powervalue);
+        powervalue=0**powervalue
+        nextled=time.time()+1
+    if time.time() > nextpower:
+        led.power(ledvalue)
+        ledvalue=0**ledvalue
+        nextpower=time.time()+4
 
-    
     
 def loop():
     while 1:
