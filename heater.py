@@ -3,13 +3,13 @@
 
 import time, update, machine
 
-global led = machine.Pin(2, machine.Pin.OUT)
-global power = machine.Pin(4, machine.Pin.OUT)
-global nextupdate = time.time()+60;
-global nextpower = time.time()+4;
-global nextled = time.time()+1;
-global ledvalue=0;
-global powervalue=0;
+led = machine.Pin(2, machine.Pin.OUT)
+power = machine.Pin(4, machine.Pin.OUT)
+nextupdate = time.time()+60
+nextpower = time.time()+4
+nextled = time.time()+1
+ledvalue=0
+powervalue=0
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
         update.update_file()
         nextupdate=time.time()+60
     if time.time() > nextpwer:
-        power.value(powervalue);
+        power.value(powervalue)
         powervalue=0**powervalue
         nextpower=time.time()+1
     if time.time() > nextled:
