@@ -29,9 +29,3 @@ def main():
 def loop():
     while 1:
         main()
-
-try:
-    loop()
-except:
-    machine.reset()
-    
