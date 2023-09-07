@@ -7,9 +7,16 @@ led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(0, machine.Pin.OUT)
 
 
-while 1:
+try:
+    loop()
+except:
+    machine.reset()
 
+def loop():
+    while 1:
+        main()
 
+def main():
     led.value(1)
     power.value(0)
     time.sleep(1)
@@ -38,7 +45,7 @@ while 1:
     led.value(0)
     time.sleep(1)
 
-    led.value(1)
+    xled.value(1)
     time.sleep(1)
     led.value(0)
     time.sleep(1)
