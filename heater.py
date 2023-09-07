@@ -16,14 +16,14 @@ def main():
     if time.time() > nextupdate:
         update.update_file()
         nextupdate=time.time()+60
-    if time.time() > nextled:
+    if time.time() > nextpwer:
         power.value(powervalue);
         powervalue=0**powervalue
-        nextled=time.time()+1
-    if time.time() > nextpower:
-        led.power(ledvalue)
+        nextpower=time.time()+1
+    if time.time() > nextled:
+        led.value(ledvalue)
         ledvalue=0**ledvalue
-        nextpower=time.time()+4
+        nextled=time.time()+4
 
     
 def loop():
