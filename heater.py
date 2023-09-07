@@ -5,6 +5,7 @@ import time, update, machine
 
 led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(0, machine.Pin.OUT)
+nextupdatetime = time.time()+60;
 
 
 def main():
@@ -41,9 +42,12 @@ def main():
     led.value(0)
     time.sleep(1)
 
+    if time.time() > nextupdatetime:
+        update.update_file()
+        nextupdatetime=time.time()+60
 
-    update.update_file()
-
+    
+    
 def loop():
     while 1:
         main()
