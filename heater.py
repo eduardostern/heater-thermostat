@@ -1,13 +1,8 @@
 # upython-update-file eduardostern
 # Heater Controller uPython
 
-import utime, update, machine, onewire, ds18x20, ubinascii, ntptime
+import utime, update, machine, onewire, ds18x20, ubinascii, ntptime, json
 from umqtt.simple import MQTTClient
-
-
-pool_setpoint=30.0
-pool_histeresis=1.0
-heater_mode=0
 
 
 nextpublish = utime.time()
@@ -37,13 +32,16 @@ def sub_cb(topic, msg):
         
         if p_var == 'persist.heater_mode':
             heater_mode=int(p_value)
+            write_persist()
             nextled = utime.time()
             nextpublish = utime.time()
         
         if p_var == 'persist.pool_histeresis':
             pool_histeresis=float(p_value)
+            write_persist()
             nextled = utime.time()
             nextpublish = utime.time()
+            
         
         if p_var == 'persist.pool_setpoint':
             ntc_setpoint=int(p_value)
@@ -68,12 +66,52 @@ def sub_cb(topic, msg):
             if ntc_setpoint == 15462:
                 pool_setpoint=33.0
                 
-            
+            write_persist()
             
             nextled = utime.time()
             nextpublish = utime.time()
             
     
+def read_persist():
+    global pool_setpoint
+    global pool_histeresis
+    global heater_mode
+
+    try:
+        f = open('_persist.json', 'r')
+        contents=f.read()
+        f.close()
+        js=json.loads(contents)
+        print(js)
+        pool_setpoint=js["pool_setpoint"]
+        pool_histeresis=js["pool_histeresis"]
+        heater_mode=js["heater_mode"]
+        js=""
+        
+    except:
+        print('Unable to load _persist.json. Loading Defaults')
+        pool_setpoint=30.0
+        pool_histeresis=1.0
+        heater_mode=0
+
+    
+def write_persist():
+    global pool_setpoint
+    global pool_histeresis
+    global heater_mode
+
+    try:
+        
+        contents= {"pool_setpoint":pool_setpoint, "pool_histeresis":pool_histeresis, "heater_mode":heater_mode}
+        f = open('_persist.json', 'w')
+        f.write(json.dumps(contents))
+        f.close()
+        print(contents)
+        contents=""
+        
+    except:
+        print('Unable to write _persist.json.')
+       
 
 def main():
     ntptime.settime()
@@ -86,6 +124,10 @@ def main():
     global pool_histeresis
     global nextled
     
+    
+    read_persist()
+
+
 
     led = machine.Pin(2, machine.Pin.OUT)
     power = machine.Signal(4, machine.Pin.OUT, invert=True)
@@ -167,3 +209,4 @@ def main():
         
 
     
+
