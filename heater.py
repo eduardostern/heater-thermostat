@@ -117,7 +117,7 @@ def write_persist():
 def main():
     ntptime.settime()
     
-    print(boot.config)
+    print(config.config)
 
   
     global pool_setpoint
