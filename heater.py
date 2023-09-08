@@ -3,7 +3,7 @@
 
 import utime, update, machine, onewire, ds18x20, ubinascii, ntptime, json
 from umqtt.simple import MQTTClient
-import config
+#import config
 
 
 nextpublish = utime.time()
@@ -118,7 +118,7 @@ def write_persist():
 def main():
     ntptime.settime()
     
-    print(config.config)
+    #print(config.config)
 
   
     global pool_setpoint
@@ -213,5 +213,6 @@ def main():
         
 
     
+
 
 
