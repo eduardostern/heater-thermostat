@@ -24,7 +24,6 @@ def sub_cb(topic, msg):
         print('Berry Emulation persist object')
         p_var = msg.decode().split(';')[0].split('=')[0]
         p_value = msg.decode().split(';')[0].split('=')[1]
-        del persist
         
         print(p_var, p_value)
         
