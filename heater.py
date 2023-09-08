@@ -3,6 +3,7 @@
 
 import utime, update, machine, onewire, ds18x20, ubinascii, ntptime, json
 from umqtt.simple import MQTTClient
+import config
 
 
 nextpublish = utime.time()
