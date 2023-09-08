@@ -38,7 +38,30 @@ def sub_cb(topic, msg):
             nextpublish = utime.time()
         
         if p_var == 'persist.pool_setpoint':
+            ntc_setpoint=int(p_value)
             pool_setpoint=float(p_value)
+            
+            if ntc_setpoint == 14355:
+                pool_setpoint=29.0
+            if ntc_setpoint == 14496:
+                pool_setpoint=29.5
+            if ntc_setpoint == 14637:
+                pool_setpoint=30.0
+            if ntc_setpoint == 14777:
+                pool_setpoint=30.5
+            if ntc_setpoint == 14917:
+                pool_setpoint=31.0
+            if ntc_setpoint == 15055:
+                pool_setpoint=31.5
+            if ntc_setpoint == 15192:
+                pool_setpoint=32.0
+            if ntc_setpoint == 15328:
+                pool_setpoint=32.5
+            if ntc_setpoint == 15462:
+                pool_setpoint=33.0
+                
+            
+            
             nextled = utime.time()
             nextpublish = utime.time()
             
@@ -56,19 +79,21 @@ def main():
     
 
     led = machine.Pin(2, machine.Pin.OUT)
-    power = machine.Pin(4, machine.Pin.OUT)
+    power = machine.Signal(4, machine.Pin.OUT, invert=True)
     nextupdate = utime.time()+60
     nextled = utime.time()
     nextpublish = utime.time()
 
     running=0
-  
+    power.value(running)
 
     ds_pin = machine.Pin(0)
     ds_sensor = ds18x20.DS18X20(onewire.OneWire(ds_pin))
     roms = ds_sensor.scan()
     ds_sensor.convert_temp()
     current_temp = ds_sensor.read_temp(roms[0])
+    current_temp = round(current_temp,2)
+
 
     MQTT_BROKER = "mqtt.safetoken.net"
     CLIENT_ID = ubinascii.hexlify(machine.unique_id()).decode()
@@ -87,17 +112,22 @@ def main():
 
         
         if utime.time() >= nextupdate:
+            ntptime.settime()
             update.update_file()
-            nextupdate=utime.time()+60
+            nextupdate=utime.time()+600
+            nextled=utime.time()
+            nextpublish=utime.time()
             
         
         if utime.time() >= nextled:
             led.value(0)
             ds_sensor.convert_temp()
             current_temp = ds_sensor.read_temp(roms[0])
+            current_temp = round(current_temp,2)
             mqttClient.ping()
             led.value(1)
             
+            lastrunning=running;
             if current_temp < (pool_setpoint-pool_histeresis):
                 running=1
             if current_temp >= pool_setpoint:
@@ -105,9 +135,12 @@ def main():
             
             if heater_mode==0:
                 running=0
-                
-            power.value(running)
             
+            
+            if lastrunning != running:
+                power.value(running)
+                nextpublish=utime.time()
+                
             nextled=utime.time()+1
         
         
