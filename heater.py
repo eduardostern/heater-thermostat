@@ -8,6 +8,8 @@ from umqtt.simple import MQTTClient
 pool_setpoint=30.0
 pool_histeresis=1.0
 heater_mode=0
+
+
 nextpublish = utime.time()
 nextled = utime.time()
 
@@ -15,6 +17,7 @@ nextled = utime.time()
 def sub_cb(topic, msg):
     
     global pool_setpoint
+    global pool_histeresis
     global heater_mode
     global nextpublish
     global nextled
@@ -34,6 +37,11 @@ def sub_cb(topic, msg):
         
         if p_var == 'persist.heater_mode':
             heater_mode=int(p_value)
+            nextled = utime.time()
+            nextpublish = utime.time()
+        
+        if p_var == 'persist.pool_histeresis':
+            pool_histeresis=float(p_value)
             nextled = utime.time()
             nextpublish = utime.time()
         
@@ -72,6 +80,7 @@ def main():
 
   
     global pool_setpoint
+    global pool_histeresis
     global heater_mode
     global nextpublish
     global pool_histeresis
@@ -80,7 +89,7 @@ def main():
 
     led = machine.Pin(2, machine.Pin.OUT)
     power = machine.Signal(4, machine.Pin.OUT, invert=True)
-    nextupdate = utime.time()+60
+    nextupdate = utime.time()+600
     nextled = utime.time()
     nextpublish = utime.time()
 
