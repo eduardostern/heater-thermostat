@@ -20,15 +20,11 @@ def sub_cb(topic, msg):
     global nextled
 
     print(topic.decode(), msg.decode())
-    mqtt_topic = topic.decode()
-    mqtt_msg = msg.decode()
-    mqtt_cmd = mqtt_topic.split('/')[2]
-    if mqtt_cmd == 'Br':
+    if topic.decode().split('/')[2] == 'Br':
         print('Berry Emulation persist object')
-        br_cmd = mqtt_msg.split(';')[0]
-        persist=br_cmd
-        p_var = persist.split('=')[0]
-        p_value = persist.split('=')[1]
+        p_var = msg.decode().split(';')[0].split('=')[0]
+        p_value = msg.decode().split(';')[0].split('=')[1]
+        del persist
         
         print(p_var, p_value)
         
