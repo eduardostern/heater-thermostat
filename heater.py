@@ -9,6 +9,7 @@ nextpublish = utime.time()
 nextled = utime.time()
 
 
+
 def sub_cb(topic, msg):
     
     global pool_setpoint
@@ -115,6 +116,8 @@ def write_persist():
 
 def main():
     ntptime.settime()
+    
+    print(boot.config)
 
   
     global pool_setpoint
@@ -209,4 +212,5 @@ def main():
         
 
     
+
 
