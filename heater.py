@@ -129,7 +129,7 @@ def main():
 
 
     led = machine.Pin(2, machine.Pin.OUT)
-    power = machine.Signal(4, machine.Pin.OUT, invert=True)
+    power = machine.Signal(4, machine.Pin.OUT, invert=False)
     nextupdate = utime.time()+600
     nextled = utime.time()
     nextpublish = utime.time()
