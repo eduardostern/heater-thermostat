@@ -20,6 +20,12 @@ def sub_cb(topic, msg):
     global nextled
 
     print(topic.decode(), msg.decode())
+    if topic.decode().split('/')[2].lower() == 'restart':
+        machine.reset()
+    if topic.decode().split('/')[2].lower() == 'reset':
+        machine.reset()
+        
+    
     if topic.decode().split('/')[2] == 'Br':
         print('Berry Emulation persist object')
         p_var = msg.decode().split(';')[0].split('=')[0].lower()
@@ -31,6 +37,8 @@ def sub_cb(topic, msg):
         print(p_var, p_value)
         
         if p_var == 'restart':
+            machine.reset()
+        if p_var == 'reset':
             machine.reset()
 
         if p_var == 'persist.heater_mode':
