@@ -1,7 +1,7 @@
 # upython-update-file eduardostern
 # Heater Controller uPython
 
-import utime, update, machine, onewire, ds18x20, ubinascii, ntptime, json
+import utime, update, machine, onewire, ds18x20, ubinascii, ntptime, json, network
 from umqtt.simple import MQTTClient
 #import config
 
@@ -146,7 +146,9 @@ def main():
 
 
     MQTT_BROKER = "mqtt.safetoken.net"
-    CLIENT_ID = ubinascii.hexlify(machine.unique_id()).decode()
+    #CLIENT_ID = ubinascii.hexlify(machine.unique_id()).decode()
+    CLIENT_ID = ubinascii.hexlify(network.WLAN(network.STA_IF).config('mac')).decode().upper()    
+     
 
     print("Client ID:", CLIENT_ID)    
 
