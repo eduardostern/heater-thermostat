@@ -152,7 +152,7 @@ def main():
     global led
     global power
 
-    nextupdate = utime.time()+3600
+    nextupdate = utime.time()+60
     nextled = utime.time()
     nextpublish = utime.time()
 
@@ -188,7 +188,7 @@ def main():
         if utime.time() >= nextupdate:
             ntptime.settime()
             update.update_file('heater.mpy','eduardostern', 'heater-thermostat')
-            nextupdate=utime.time()+3600
+            nextupdate=utime.time()+60
             nextled=utime.time()
             nextpublish=utime.time()
             
