@@ -170,12 +170,12 @@ def main():
             
         
         if utime.time() >= nextled:
-            led.value(0)
+            led.value(running)
             ds_sensor.convert_temp()
             current_temp = ds_sensor.read_temp(roms[0])
             current_temp = round(current_temp,2)
             mqttClient.ping()
-            led.value(1)
+            led.value(0**running)
             
             lastrunning=running;
             if current_temp < (pool_setpoint-pool_histeresis):
