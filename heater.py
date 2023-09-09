@@ -156,8 +156,8 @@ def main():
     nextled = utime.time()
     nextpublish = utime.time()
 
-    running=0
-    power.value(running)
+    running=power.value()
+    #power.value(running)
 
     ds_pin = machine.Pin(0)
     ds_sensor = ds18x20.DS18X20(onewire.OneWire(ds_pin))
