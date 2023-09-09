@@ -24,8 +24,10 @@ def sub_cb(topic, msg):
 
     print(topic.decode(), msg.decode())
     if topic.decode().split('/')[2].lower() == 'restart':
+        power.value(0)
         machine.reset()
     if topic.decode().split('/')[2].lower() == 'reset':
+        power.value(0)
         machine.reset()
         
     
@@ -40,8 +42,10 @@ def sub_cb(topic, msg):
         print(p_var, p_value)
         
         if p_var == 'restart':
+            power.value(0)
             machine.reset()
         if p_var == 'reset':
+            power.value(0)
             machine.reset()
 
         if p_var == 'persist.heater_mode':
@@ -147,7 +151,7 @@ def main():
 
     global led
     global power
-    
+
     nextupdate = utime.time()+3600
     nextled = utime.time()
     nextpublish = utime.time()
