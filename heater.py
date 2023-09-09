@@ -10,6 +10,9 @@ nextpublish = utime.time()
 nextled = utime.time()
 
 
+led = machine.Pin(2, machine.Pin.OUT)
+power = machine.Pin(4, machine.Pin.OUT)
+
 
 def sub_cb(topic, msg):
     
@@ -142,8 +145,9 @@ def main():
 
 
 
-    led = machine.Pin(2, machine.Pin.OUT)
-    power = machine.Pin(4, machine.Pin.OUT)
+    global led
+    global power
+    
     nextupdate = utime.time()+3600
     nextled = utime.time()
     nextpublish = utime.time()
