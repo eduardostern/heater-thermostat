@@ -187,7 +187,7 @@ def main():
         
         if utime.time() >= nextupdate:
             ntptime.settime()
-            update.update_file()
+            update.update_file('heater.mpy','eduardostern', 'heater-thermostat')
             nextupdate=utime.time()+3600
             nextled=utime.time()
             nextpublish=utime.time()
