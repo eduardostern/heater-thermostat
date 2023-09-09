@@ -155,7 +155,7 @@ def main():
     mqttClient = MQTTClient(CLIENT_ID, MQTT_BROKER, keepalive=60)
     mqttClient.connect()
     mqttClient.set_callback(sub_cb)
-    mqttClient.subscribe('cmnd/'+CLIENT_ID+'/#')
+    mqttClient.subscribe('cmnd/{:s}/#'.format(CLIENT_ID))
 
 
     while 1:
@@ -199,9 +199,11 @@ def main():
         if utime.time() >= nextpublish:
             
             current_time = 946684800 + utime.time()
-            message = '{"utc":'+str(current_time)+', "mode":'+str(heater_mode)+', "current_temp":'+str(current_temp)+', "pool_setpoint":'+str(pool_setpoint)+', "running": '+str(running)+'}'
-            topic='tele/'+CLIENT_ID+'/RESULT'
-            
+            #message = '{"utc":'+str(current_time)+', "mode":'+str(heater_mode)+', "current_temp":'+str(current_temp)+', "pool_setpoint":'+str(pool_setpoint)+', "running": '+str(running)+'}'
+
+            message = json.dumps({"utc":str(current_time), "mode":str(heater_mode), "current_temp":str(current_temp), "pool_setpoint":str(pool_setpoint), "running":str(running)}) 
+            #topic='tele/'+CLIENT_ID+'/RESULT'
+            topic='tele/{:s}/RESULT'.format(CLIENT_ID)
             mqttClient.publish(topic, str(message).encode())
             print(message, topic)
             
