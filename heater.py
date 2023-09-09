@@ -22,11 +22,14 @@ def sub_cb(topic, msg):
     print(topic.decode(), msg.decode())
     if topic.decode().split('/')[2] == 'Br':
         print('Berry Emulation persist object')
-        p_var = msg.decode().split(';')[0].split('=')[0]
+        p_var = msg.decode().split(';')[0].split('=')[0].lower()
         p_value = msg.decode().split(';')[0].split('=')[1]
         
         print(p_var, p_value)
         
+        if p_var == 'restart':
+            machine.restart()
+
         if p_var == 'persist.heater_mode':
             heater_mode=int(p_value)
             write_persist()
@@ -130,7 +133,7 @@ def main():
 
     led = machine.Pin(2, machine.Pin.OUT)
     power = machine.Pin(4, machine.Pin.OUT)
-    nextupdate = utime.time()+60
+    nextupdate = utime.time()+3600
     nextled = utime.time()
     nextpublish = utime.time()
 
@@ -166,7 +169,7 @@ def main():
         if utime.time() >= nextupdate:
             ntptime.settime()
             update.update_file()
-            nextupdate=utime.time()+60
+            nextupdate=utime.time()+3600
             nextled=utime.time()
             nextpublish=utime.time()
             
