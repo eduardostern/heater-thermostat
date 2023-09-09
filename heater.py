@@ -152,7 +152,7 @@ def main():
     global led
     global power
 
-    nextupdate = utime.time()+60
+    nextupdate = utime.time()+3600
     nextled = utime.time()
     nextpublish = utime.time()
 
@@ -168,7 +168,6 @@ def main():
 
 
     MQTT_BROKER = "mqtt.safetoken.net"
-    #CLIENT_ID = ubinascii.hexlify(machine.unique_id()).decode()
     CLIENT_ID = ubinascii.hexlify(network.WLAN(network.STA_IF).config('mac')).decode().upper()    
      
 
@@ -188,7 +187,7 @@ def main():
         if utime.time() >= nextupdate:
             ntptime.settime()
             update.update_file('heater.mpy','eduardostern', 'heater-thermostat')
-            nextupdate=utime.time()+60
+            nextupdate=utime.time()+3600
             nextled=utime.time()
             nextpublish=utime.time()
             
@@ -220,14 +219,10 @@ def main():
         
         if utime.time() >= nextpublish:
             
-            current_time = 946684800 + utime.time()
-            #message = '{"utc":'+str(current_time)+', "mode":'+str(heater_mode)+', "current_temp":'+str(current_temp)+', "pool_setpoint":'+str(pool_setpoint)+', "running": '+str(running)+'}'
-
-            message = json.dumps({"utc":str(current_time), "mode":str(heater_mode), "current_temp":str(current_temp), "pool_setpoint":str(pool_setpoint), "running":str(running)}) 
-            #topic='tele/'+CLIENT_ID+'/RESULT'
+            message = json.dumps({"utc":str(946684800 + utime.time()), "mode":str(heater_mode), "current_temp":str(current_temp), "pool_setpoint":str(pool_setpoint), "running":str(running)}) 
             topic='tele/{:s}/RESULT'.format(CLIENT_ID)
             mqttClient.publish(topic, str(message).encode())
-            print(message, topic)
+            print(topic, message)
             
             nextpublish=utime.time()+30
             
