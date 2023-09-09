@@ -130,7 +130,7 @@ def main():
 
     led = machine.Pin(2, machine.Pin.OUT)
     power = machine.Pin(4, machine.Pin.OUT)
-    nextupdate = utime.time()+600
+    nextupdate = utime.time()+60
     nextled = utime.time()
     nextpublish = utime.time()
 
@@ -166,7 +166,7 @@ def main():
         if utime.time() >= nextupdate:
             ntptime.settime()
             update.update_file()
-            nextupdate=utime.time()+600
+            nextupdate=utime.time()+60
             nextled=utime.time()
             nextpublish=utime.time()
             
