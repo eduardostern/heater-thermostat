@@ -12,6 +12,8 @@ nextled = utime.time()
 
 led = machine.Pin(2, machine.Pin.OUT)
 power = machine.Pin(4, machine.Pin.OUT)
+redled = machine.Pin(16, machine.Pin.OUT)
+
 
 
 def sub_cb(topic, msg):
@@ -151,6 +153,7 @@ def main():
 
     global led
     global power
+    global redled
 
     nextupdate = utime.time()+3600
     nextled = utime.time()
@@ -194,11 +197,13 @@ def main():
         
         if utime.time() >= nextled:
             led.value(running)
+            redled.value(0**running)
             ds_sensor.convert_temp()
             current_temp = ds_sensor.read_temp(roms[0])
             current_temp = round(current_temp,2)
             mqttClient.ping()
             led.value(0**running)
+            redled.value(running)
             
             lastrunning=running;
             if current_temp < (pool_setpoint-pool_histeresis):
