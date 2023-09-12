@@ -34,7 +34,7 @@ def sub_cb(topic, msg):
         
     
     if topic.decode().split('/')[2] == 'Br':
-        print('Berry Emulation persist object')
+        print('Berry persist object emulation')
         p_var = msg.decode().split(';')[0].split('=')[0].lower()
         try:
             p_value = msg.decode().split(';')[0].split('=')[1]
